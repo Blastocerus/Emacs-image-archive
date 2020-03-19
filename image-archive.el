@@ -162,9 +162,11 @@
          (modif-time (format "%.0f" (float-time)))
          (thumbnail-nq8-file (replace-regexp-in-string ".png\\'" "-nq8.png"
                                                        thumbnail-file))
+	 (thumbnail-command-params 
+	  (add-to-list 'image-dired-cmd-create-thumbnail-options "%p"))
          (command
           (format-spec
-           image-dired-cmd-create-thumbnail-options
+	   (mapconcat 'identity thumbnail-command-params " ")
            (list
             (cons ?p image-dired-cmd-create-thumbnail-program)
             (cons ?w width)
@@ -178,9 +180,11 @@
 (defun image-archive--construct-resize-shell ()
   (let* ((width (frame-pixel-width))
          (height (image-archive--original-image-pixel-height))
+	 (thumbnail-command-params 
+	  (add-to-list 'image-dired-cmd-create-thumbnail-options "%p"))
          (command
           (format-spec
-           image-dired-cmd-create-temp-image-options
+	   (mapconcat 'identity thumbnail-command-params " ")
            (list
             (cons ?p image-dired-cmd-create-temp-image-program)
             (cons ?w width)
