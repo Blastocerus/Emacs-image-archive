@@ -180,8 +180,8 @@
 (defun image-archive--construct-resize-shell ()
   (let* ((width (frame-pixel-width))
          (height (image-archive--original-image-pixel-height))
-	 (thumbnail-command-params 
-	  (add-to-list 'image-dired-cmd-create-thumbnail-options "%p"))
+	 (thumbnail-command-params
+	  '("%p" "-size" "%wx%h" "%f[0]" "-resize" "%wx%h" "-strip" "%t"))
          (command
           (format-spec
 	   (mapconcat 'identity thumbnail-command-params " ")
